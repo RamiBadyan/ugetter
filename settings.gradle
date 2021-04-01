@@ -1,0 +1,3 @@
+include ':ugetter'
+include ':app'
+rootProject.name = "uGetter"
