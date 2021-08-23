@@ -113,7 +113,7 @@ public class LowCostVideo {
             UpToStream.fetch(context,url,onComplete);
         } else if (check(fansubs,url)){
             FanSubs.fetch(url,onComplete);
-        } else if (check(fembed,url)){
+        } else if (url.contains("fembed")){
             FEmbed.fetch(url,onComplete);
         } else if (check(filerio,url)){
             FileRIO.fetch(url,onComplete);

@@ -1,5 +1,7 @@
 package com.xpero.ugetter.Sites;
 
+import android.util.Log;
+
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.StringRequestListener;
@@ -25,9 +27,10 @@ Khun Htetz Naing
 
 public class FEmbed {
     public static void fetch(String url, final LowCostVideo.OnTaskCompleted onComplete){
-        String id = get_fEmbed_video_ID(url);
-        if (id!=null){
-            AndroidNetworking.post("https://www.feurl.com/api/source/"+id)
+       // String id = get_fEmbed_video_ID(url);
+        String newUrl = getUrl(url);
+        if (newUrl!=null){
+            AndroidNetworking.post(newUrl)
                     .build()
                     .getAsString(new StringRequestListener() {
                         @Override
@@ -44,6 +47,10 @@ public class FEmbed {
                         }
                     });
         }else onComplete.onError();
+    }
+
+    private static String getUrl(String url) {
+        return url.replace("fembed","");
     }
 
     private static ArrayList<XModel> parse(String response){
