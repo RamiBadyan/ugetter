@@ -28,13 +28,16 @@ Khun Htetz Naing
 public class FEmbed {
     public static void fetch(String url, final LowCostVideo.OnTaskCompleted onComplete){
        // String id = get_fEmbed_video_ID(url);
+        Log.d("libraryGet",url);
         String newUrl = getUrl(url);
+        Log.d("libraryGet",newUrl);
         if (newUrl!=null){
             AndroidNetworking.post(newUrl)
                     .build()
                     .getAsString(new StringRequestListener() {
                         @Override
                         public void onResponse(String response) {
+                            Log.d("libraryGet",response);
                             ArrayList<XModel> xModels = parse(response);
                             if (xModels!=null){
                                 onComplete.onTaskCompleted(sortMe(xModels),true);
