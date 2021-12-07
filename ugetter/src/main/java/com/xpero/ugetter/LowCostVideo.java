@@ -19,6 +19,7 @@ import com.xpero.ugetter.Sites.GoUnlimited;
 import com.xpero.ugetter.Sites.Muvix;
 import com.xpero.ugetter.Sites.VideoBM;
 import com.xpero.ugetter.Sites.Vudeo;
+import com.xpero.ugetter.Sites.Zippy;
 import com.xpero.ugetter.Utils.DailyMotionUtils;
 import com.xpero.ugetter.Core.GDrive2020;
 import com.xpero.ugetter.Model.XModel;
@@ -76,6 +77,7 @@ public class LowCostVideo {
     private final String fourShared = "https?:\\/\\/(www\\.)?(4shared\\.com)\\/(video|web\\/embed)\\/.+";
     private final String streamtape = "https?:\\/\\/(www\\.)?(streamtape\\.com)\\/(v)\\/.+";
     private final String vudeo = "https?:\\/\\/(www\\.)?(vudeo\\.net)\\/.+";
+    private final String zippy = "https?:\\/\\/(www.*\\.)(zippyshare\\.com)\\/.+";
 
     public LowCostVideo(@NonNull Context context){
         this.context=context;
@@ -147,6 +149,8 @@ public class LowCostVideo {
             StreamTape.fetch(url,onComplete);
         }else if (check(vudeo,url)) {
             Vudeo.fetch(url, onComplete);
+        }else if (check(zippy,url)) {
+            Zippy.fetch(context,url, onComplete);
         }else onComplete.onError();
     }
 
