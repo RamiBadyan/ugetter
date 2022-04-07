@@ -1,5 +1,7 @@
 package com.xpero.ugetter.Sites;
 
+import static com.xpero.ugetter.LowCostVideo.agent;
+
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.StringRequestListener;
@@ -13,72 +15,51 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class VivoSX {
-    public static void fetch(String url, final LowCostVideo.OnTaskCompleted onTaskCompleted){
+
+    public static void fetch(String url, final LowCostVideo.OnTaskCompleted onComplete){
         AndroidNetworking.get(url)
-                .addHeaders("User-Agent","Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.99 Safari/537.36")
+                .setUserAgent(agent)
                 .build()
                 .getAsString(new StringRequestListener() {
                     @Override
                     public void onResponse(String response) {
-                        String encString = getEncrypt(response);
-                        if (encString!=null){
-                            ArrayList<XModel> xModels = new ArrayList<>();
-                            String src = decode(encString);
-                            if (src!=null) {
-                                XModel xModel = new XModel();
-                                xModel.setUrl(src);
-                                xModel.setQuality("Normal");
-                                xModels.add(xModel);
-                                onTaskCompleted.onTaskCompleted(xModels,false);
-                            }else onTaskCompleted.onError();
-                        }else onTaskCompleted.onError();
+                        ArrayList<XModel> xModels = parse(response);
+                        if (xModels!=null){
+                            onComplete.onTaskCompleted(xModels,false);
+                        }else onComplete.onError();
                     }
 
                     @Override
                     public void onError(ANError anError) {
-                        onTaskCompleted.onError();
+                        onComplete.onError();
                     }
                 });
     }
 
-    private static String decodeURIComponent(String s) {
-        if (s == null) {
-            return null;
+    private static ArrayList<XModel> parse(String response) {
+        String src = getSrc(response);
+        if (src != null && src.length() > 0) {
+            XModel xModel = new XModel();
+            xModel.setUrl(src);
+            xModel.setQuality("Normal");
+
+            ArrayList<XModel> xModels = new ArrayList<>();
+            xModels.add(xModel);
+            return xModels;
+
         }
-        String result;
-        try {
-            result = URLDecoder.decode(s, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            result = s;
-        }
-        return result;
+        return null;
     }
 
-    private static String getEncrypt(String html){
-        String regex = "source:? ?'(.*)'";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(html);
-        if (matcher.find()){
+
+    private static String getSrc(String code){
+        final String regex = "hls\": \"(.*?)\"";
+        final Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE);
+        final Matcher matcher = pattern.matcher(code);
+        if (matcher.find()) {
             return matcher.group(1);
         }
         return null;
     }
 
-    private static String decode(String data){
-        data = decodeURIComponent(data);
-        String result = null;
-        for (String a:data.split("")) {
-            if (a.length()>0) {
-                if (result==null){result="";}
-                int tmp = a.codePointAt(0) + 47;
-                tmp = tmp > 126 ? tmp - 94 : tmp;
-                result += fromCharCode(tmp);
-            }
-        }
-        return result;
-    }
-
-    private static String fromCharCode(int... codePoints) {
-        return new String(codePoints, 0, codePoints.length);
-    }
 }

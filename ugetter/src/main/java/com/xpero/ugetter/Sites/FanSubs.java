@@ -19,12 +19,6 @@ import static com.xpero.ugetter.LowCostVideo.agent;
 import static com.xpero.ugetter.Utils.Utils.putModel;
 import static com.xpero.ugetter.Utils.Utils.sortMe;
 
-/*
-This is direct link getter for FanSubs
-    By
-Khun Htetz Naing
- */
-
 public class FanSubs {
     public static void fetch(String url, final LowCostVideo.OnTaskCompleted onComplete){
         AndroidNetworking.get(url)

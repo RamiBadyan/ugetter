@@ -1,3 +1,128 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">uGetter</string>
+
+    <string name="fetch">Fetch</string>
+    <string name="enter_your_url">Enter a supported url</string>
+    <string name="mp4upload">Mp4Upload</string>
+    <string name="mediafire">Mediafire</string>
+    <string name="vk">VK</string>
+    <string name="youtube">Youtube</string>
+    <string name="vidoza">Vidoza</string>
+    <string name="sendvid">SendVid</string>
+    <string name="filerio">FileRio</string>
+    <string name="videobin">VideoBin</string>
+    <string name="_4shared">4Shared</string>
+    <string name="vudeo">Vudeo</string>
+    <string name="google_photos">Google Photos</string>
+    <string name="facebook">Facebook</string>
+    <string name="ok_ru" tools:ignore="Typos">Ok.ru</string>
+    <string name="twitter">Twitter</string>
+    <string name="solidfiles">SolidFiles</string>
+    <string name="fembed">FEmbed</string>
+    <string name="dailymotion">DailyMotion</string>
+    <string name="vidbm">VidBM</string>
+    <string name="bittube">BitTube</string>
+    <string name="streamtape">StreamTape</string>
+    <string name="quality">Quality!</string>
+    <string name="s_mp4upload">https://www.mp4upload.com/ct5j6f6hn1fk</string>
+    <string name="s_gphotos" tools:ignore="Typos">https://photos.google.com/share/AF1QipPWmdX9jBMaoK4NbKYcjWrehnb6V2XCB1MUTtEIzzD-5PRmmQAcy3ZO-EZetY89CA/photo/AF1QipOxfyEdP3dVS3JVLVeDsznV1BpRqjbzbWzsAN_L?key=VnlwaU9GNDNVWDM3SW1NU28zZ3Bpc1RXOXAyTlF3</string>
+    <string name="s_facebook">317455892574677</string>
+    <string name="s_mediafire">http://www.mediafire.com/file/i8sjfas751yknlm/PaO_Ma_Lay_%255BOfficial_MV%255D_-_%25281080P_HD%2529.mp4/file</string>
+    <string name="s_okru" tools:ignore="Typos">https://ok.ru/video/947875089023</string>
+    <string name="s_vkdotcom">https://vk.com/video-94920838_456240508</string>
+    <string name="s_twitter">https://twitter.com/i/status/1115097302920847363</string>
+    <string name="s_youtube">https://www.youtube.com/watch?v=O6Xu-9mhCQ0</string>
+    <string name="s_solidfiles">http://www.solidfiles.com/v/PAwwxGvgqd5VX</string>
+    <string name="s_vidoza">https://vidoza.net/s7poulhc6yax.html</string>
+    <string name="s_sendvid">http://sendvid.com/3bh9588j</string>
+    <string name="s_fembed">https://streamm4u.club/f/lnm8-in6z7wxwjk</string>
+    <string name="s_filerio">https://filerio.in/rpnqt5c8j104</string>
+    <string name="s_dailymotion">https://www.dailymotion.com/video/x7v8vg5</string>
+    <string name="s_vidbam">https://vidbam.org/n27dkro8fo8v.html</string>
+    <string name="s_bittube" tools:ignore="TypographyDashes">https://bittube.video/videos/watch/8e02be96-fa09-4309-a469-3c74c945182b</string>
+    <string name="s_videobin">https://videobin.co/l9guhqs8x3a9</string>
+    <string name="s_fourshared">https://www.4shared.com/video/bLza9r9mea/45016068_2204489923208618_5254.html</string>
+    <string name="s_streamtape"></string>
+    <string name="s_vudeo">https://vudeo.net/azhfxfpzq6yq.html</string>
+    <string name="no_connection">No internet connection!</string>
+    <string name="congrats">Congratulations!</string>
+    <string name="can_stream">Now,you can stream the link.</string>
+    <string name="stream">Stream</string>
+    <string name="copy">Copy</string>
+    <string name="copied">Copied To Clipboard</string>
+    <string name="sorry">Sorry!</string>
+    <string name="error">Error</string>
+    <string name="ok">OK</string>
+    <string name="twitter_profile">https://twitter.com/Inside_4ndroid</string>
+    <string name="twitter_toast">Your device has no browser/twitter app installed please install a web browser/twitter or try on a non tv device! Thank You :)</string>
+    <string name="about_title">About</string>
+    <string name="ok_x" tools:ignore="ButtonCase,Typos">Ok</string>
+    <string name="ok_z">OK</string>
+    <string name="permissions">You need to allow this permission!</string>
+    <string name="cookie">Cookie</string>
+    <string name="file_size"><![CDATA[\" => File Size: \"]]></string>
+    <string name="cookie_z"><![CDATA[\"\nCookie => \"]]></string>
+    <string name="files_size_z">\"File Size: \"</string>
+    <string name="zero">0</string>
+    <string name="b">B</string>
+    <string name="kb">kB</string>
+    <string name="mb">MB</string>
+    <string name="gb">GB</string>
+    <string name="tb">TB</string>
+    <string name="decimal_format">#,##0.#</string>
+    <string name="space">\" \"</string>
+    <string name="ssl">SSL</string>
+    <string name="about_menu">About</string>
+    <string name="amazon">https://www.amazon.com/clouddrive/share/uTa9DESz4iQ6tqQRpS7xFE1WizJKa2pwQPXUs91ZC0g</string>
+    <string name="doodstream">doodstream</string>
+    <string name="dood">https://dood.ws/e/8sbnxmwsy6cg</string>
+    <string name="streamsb">https://sbplay2.com/e/uvz1g6de3dtb</string>
+    <string name="streamsbz">streamsb</string>
+    <string name="amazon_drive">Amazon Drive</string>
+    <string name="mixdrop">mixdrop</string>
+    <string name="mdrop"><![CDATA[https://mixdrop.co/e/vnr7den9sl11e8?sub1=https://msubload.com/sub/tom-clancys-without-remorse/tom-clancys-without-remorse.vtt&sub1_label=English]]></string>
+    <string name="gounlimited">gounlimited</string>
+    <string name="gounlimiteduri">https://gounlimited.to/embed-lps2khonhl4l.html</string>
+    <string name="voxzer_string">voxzer</string>
+    <string name="anavidz_btn">anavidz</string>
+    <string name="aparat_btn">aparat</string>
+    <string name="archive_btn">archive</string>
+    <string name="voxzer_uri">https://player.voxzer.org/view/691379d68d354fe6e71265e1</string>
+    <string name="anavidz_uri">https://anavidz.com:2096/embed-181bufggfrem.html</string>
+    <string name="aparat_uri">https://www.aparat.com/v/pH2vX</string>
+    <string name="archive_uri">https://archive.org/download/HitchcockTrailers/1935The39Steps_512kb.mp4</string>
+    <string name="bitchute_btn">bitchute</string>
+    <string name="brighteon_btn">brighteon</string>
+    <string name="deadlyblogger_btn">deadlyblogger</string>
+    <string name="fansubs_btn">fansubs</string>
+    <string name="diasfem_btn">diasfem</string>
+    <string name="gdstream_btn">gdstream</string>
+    <string name="gofile_btn">gofile</string>
+    <string name="bitchute">https://www.bitchute.com/video/bw21AnWYxVkP</string>
+    <string name="brighteon">https://www.brighteon.com/f0d6c463-827b-4150-83f4-69f5ae58ba1b</string>
+    <string name="deadlyblogger">http://www.deadlyblogger.com/NewRelease/dal1.mp4</string>
+    <string name="fansubs">https://fansubs.tv/watch/%D9%81%D9%8A%D9%84%D9%85-%D8%A8%D9%88%D8%AA%D8%B4%D8%A7%D9%86-bocchan-%D9%85%D8%AA%D8%B1%D8%AC%D9%85_mVPR9AtKsivDicb.html</string>
+    <string name="diasfem">https://suzihaza.com/v/1lo6x-yglo5</string>
+    <string name="gdstream">https://gdstream.net/v/g3eela--z34lnkp</string>
+    <string name="googleusercontent_btn">googleusercontent</string>
+    <string name="hdvid_vidhdthe_btn">hdvid / vidhdthe</string>
+    <string name="mediashore_btn">mediashore</string>
+    <string name="voesx_btn">voesx</string>
+    <string name="eplayvidbtn">EplayVid</string>
+    <string name="vidmolybtn">VidMoly</string>
+    <string name="gusercontent">https://lh3.googleusercontent.com/CoKseO5Jy1sOnPruoCWQ53ERsjG5ID5qQkjAehh8DIMt2M3PMWf8Gu_EKdQ9fRuD2NH50BVx90XRT1tMXB1HiKHPjvGzyTi-=m22</string>
+    <string name="google">https://google.com</string>
+    <string name="hdvid">https://hdvid.tv/embed-6m7qujekpkmx.html</string>
+    <string name="mediashore">https://mediashore.org/v/w7m74anl7mgzrj5</string>
+    <string name="voesx">https://voe.sx/e/icycuc25ewjj</string>
+    <string name="gomplayer">https://gomoplayer.com/7dpg3f4z1t33</string>
+    <string name="eplayvid">https://eplayvid.net/watch/f8907ab0d5b90cf</string>
+    <string name="vidmoly">https://vidmoly.me/vmvynw3hxpwu</string>
+    <string name="vidmolyref">https://vidmoly.to/</string>
+    <string name="midian">http://www.midian.appboxes.co/wolfyB/newmidian/Fitness/fitness1/Insanity%20Asylum/01%20-%20Speed%20and%20Agility.mp4</string>
+    <string name="upstream">https://upstream.to/eyzvd3q7sger</string>
+    <string name="midian_appboxes_avi_not_supported">Midian.Appboxes (avi not supported)</string>
+    <string name="yobox_btn">yobox</string>
+    <string name="yodbox">https://yodbox.com/817f0xzn88lr.html</string>
+
 </resources>

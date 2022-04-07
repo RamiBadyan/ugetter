@@ -1,5 +1,7 @@
 package com.xpero.ugetter.Sites;
 
+import static com.xpero.ugetter.Utils.Utils.getDomainFromURL;
+
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.StringRequestListener;
@@ -19,6 +21,9 @@ public class VideoBIN {
 
     public static void fetch(String url, final LowCostVideo.OnTaskCompleted onTaskCompleted){
         AndroidNetworking.get(url)
+                .addHeaders("User-Agent", LowCostVideo.agent)
+                .addHeaders("content-type", "application/json")
+                .addHeaders("Connection","close")
                 .build()
                 .getAsString(new StringRequestListener() {
                     @Override
@@ -31,6 +36,7 @@ public class VideoBIN {
 
                     @Override
                     public void onError(ANError anError) {
+                        anError.printStackTrace();
                         onTaskCompleted.onError();
                     }
                 });
@@ -66,10 +72,10 @@ public class VideoBIN {
 
                 for (int i=0;i<list.size();i++){
                     String label = quality(list.size(),i);
-                    XModel xModel = new XModel();
-                    xModel.setQuality(label);
-                    xModel.setUrl(list.get(i));
-                    xModels.add(xModel);
+                    XModel jModel = new XModel();
+                    jModel.setQuality(label);
+                    jModel.setUrl(list.get(i));
+                    xModels.add(jModel);
                 }
             }
         } catch (JSONException e) {
@@ -77,4 +83,23 @@ public class VideoBIN {
         }
         return xModels;
     }
+
+    private static String fixURL(String url){
+        if (!url.contains("embed-")) {
+            final String regex = "co/([^']*)";
+            final Pattern pattern = Pattern.compile(regex);
+            final Matcher matcher = pattern.matcher(url);
+            if (matcher.find()) {
+                String id = matcher.group(1);
+                if (id.contains("/")) {
+                    id = id.substring(0, id.lastIndexOf("/"));
+                }
+                url = getDomainFromURL(url)+"/embed-" + id;
+            } else {
+                return null;
+            }
+        }
+        return url;
+    }
+
 }

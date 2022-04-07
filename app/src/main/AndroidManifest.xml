@@ -13,7 +13,8 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.UGetter"
         tools:targetApi="m">
-        <activity android:name="com.xpero.ugetterexample.MainActivity">
+        <activity android:name="com.xpero.ugetterexample.MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

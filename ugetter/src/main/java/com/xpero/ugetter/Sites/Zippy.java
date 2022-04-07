@@ -2,6 +2,7 @@ package com.xpero.ugetter.Sites;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Looper;
 import android.util.Base64;
@@ -31,9 +32,7 @@ public class Zippy {
         try {
             url = URLDecoder.decode(url, "utf-8");
         } catch (UnsupportedEncodingException e)
-        {
-            e.printStackTrace();
-        }
+        { e.printStackTrace(); }
 
         webView = new WebView(context);
         webView.getSettings().setJavaScriptEnabled(true);
@@ -79,7 +78,6 @@ public class Zippy {
         if (webView!=null) {
             String url = "javascript: (function() {" + decodeBase64(getJs()) + "})()";
             webView.evaluateJavascript(url, null);
-
         }
     }
 
@@ -113,9 +111,10 @@ public class Zippy {
         @SuppressWarnings("unused")
         @JavascriptInterface
         public void error(final String error) { new Handler(Looper.getMainLooper()).post(() -> {
-                destroyWebView();
+            destroyWebView();
                 result(null);
             });
         }
     }
+
 }

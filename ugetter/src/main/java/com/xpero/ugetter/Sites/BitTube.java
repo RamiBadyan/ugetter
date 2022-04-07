@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 public class BitTube {
 
     private static String getBitTubeID(String string){
-        final String regex = "(embed|watch)\\/(.+)";
+        final String regex = "(embed|watch)/(.+)";
         final Pattern pattern = Pattern.compile(regex);
         final Matcher matcher = pattern.matcher(string);
         if (matcher.find()) {
@@ -55,14 +55,13 @@ public class BitTube {
         try {
             JSONArray array = new JSONObject(html).getJSONArray("files");
             for (int i=0;i<array.length();i++){
-                System.out.println("BitTube => "+array.getJSONObject(i));
                 String label = array.getJSONObject(i).getJSONObject("resolution").getString("label");
                 String src = array.getJSONObject(i).getString("fileDownloadUrl");
                 if (label.length()>1) {
-                    XModel xModel = new XModel();
-                    xModel.setQuality(label);
-                    xModel.setUrl(src);
-                    xModels.add(xModel);
+                    XModel jModel = new XModel();
+                    jModel.setQuality(label);
+                    jModel.setUrl(src);
+                    xModels.add(jModel);
                 }
             }
         } catch (JSONException e) {

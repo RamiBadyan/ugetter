@@ -11,12 +11,6 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/*
-This is direct link getter for MP4Upload
-    By
-Khun Htetz Naing
- */
-
 public class MP4Upload {
     public static void fetch(String url, final LowCostVideo.OnTaskCompleted onTaskCompleted){
         AndroidNetworking.get(fixURL(url))
@@ -69,7 +63,8 @@ public class MP4Upload {
     }
 
     private static String getSrc(String code){
-        final String regex = "src: ?\"(.*?)\"";
+       // final String regex = "src: ?\"(.*?)\"";
+        final String regex = "src\\(\"(.*?)\"\\);";
         final Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE);
         final Matcher matcher = pattern.matcher(code);
         if (matcher.find()) {

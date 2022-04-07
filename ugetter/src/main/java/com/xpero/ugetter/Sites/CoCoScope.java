@@ -13,12 +13,6 @@ import java.util.regex.Pattern;
 import static com.xpero.ugetter.LowCostVideo.agent;
 import static com.xpero.ugetter.Utils.Utils.putModel;
 
-/*
-This is direct link getter for CoCoScope
-    By
-Khun Htetz Naing
- */
-
 public class CoCoScope {
     public static void fetch(String url, final LowCostVideo.OnTaskCompleted onComplete){
         AndroidNetworking.get(url)

@@ -13,12 +13,6 @@ import java.util.regex.Pattern;
 
 import static com.xpero.ugetter.LowCostVideo.agent;
 
-/*
-This is direct link getter for GoUnlimited
-    By
-Khun Htetz Naing
- */
-
 public class GoUnlimited {
     public static void fetch(String url, final LowCostVideo.OnTaskCompleted onComplete){
         AndroidNetworking.get(url)

@@ -1,5 +1,7 @@
 package com.xpero.ugetter.Sites;
 
+import static com.xpero.ugetter.Utils.Utils.getDomainFromURL;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Handler;
@@ -11,100 +13,74 @@ import android.webkit.URLUtil;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.StringRequestListener;
 import com.xpero.ugetter.LowCostVideo;
 import com.xpero.ugetter.Model.XModel;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class VideoBM {
-    private static WebView webView;
-    private static LowCostVideo.OnTaskCompleted onTaskCompleted;
-    private static boolean gotMe = false;
 
     @SuppressLint("JavascriptInterface")
-    public static void get(Context context,String url, final LowCostVideo.OnTaskCompleted onDone){
-        onTaskCompleted = onDone;
-        webView = new WebView(context);
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.addJavascriptInterface(new MyInterface(),"xGetter");
-        webView.setWebViewClient(new WebViewClient(){
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-                System.out.println("Load => Find");
-                findMe();
-            }
-        });
+    public static void fetch(String url, final LowCostVideo.OnTaskCompleted onTaskCompleted){
+        url = fixURL(url);
+        if (url!=null) {
+            AndroidNetworking.get(url)
+                    .build()
+                    .getAsString(new StringRequestListener() {
+                        @Override
+                        public void onResponse(String response) {
+                            ArrayList<XModel> jModels = parse(response);
+                            if (jModels!=null) {
+                                onTaskCompleted.onTaskCompleted(jModels, false);
+                            }else onTaskCompleted.onError();
+                        }
 
-        webView.setDownloadListener(new DownloadListener() {
-            @Override
-            public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
-                final String fileName= URLUtil.guessFileName(url,contentDisposition,mimetype);
-                if (webView.getTitle().contains(fileName)) {
-                    destroyWebView();
-                    result(url);
-                }
-            }
-        });
-
-        url = url.replaceAll(".com/",".com/embed-");
-        gotMe = false;
-        webView.loadUrl(url);
+                        @Override
+                        public void onError(ANError anError) {
+                            onTaskCompleted.onError();
+                        }
+                    });
+        }else onTaskCompleted.onError();
     }
 
-    private static String decodeBase64(String coded){
-        try {
-            return new String(Base64.decode(coded.getBytes("UTF-8"), Base64.DEFAULT));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+    private static String fixURL(String url){
+        if (!url.contains("embed-")) {
+            final String regex = "org/([^']*)";
+            final Pattern pattern = Pattern.compile(regex);
+            final Matcher matcher = pattern.matcher(url);
+            if (matcher.find()) {
+                String id = matcher.group(1);
+                if (id.contains("/")) {
+                    id = id.substring(0, id.lastIndexOf("/"));
+                }
+                url = getDomainFromURL(url)+"/embed-" + id;
+            } else {
+                return null;
+            }
         }
+        return url;
+    }
+
+    private static ArrayList<XModel> parse(String response){
+
+        final Pattern pattern = Pattern.compile("sources.*file.*?\"(.*?)\",", Pattern.MULTILINE);
+        final Matcher matcher = pattern.matcher(response);
+        if (matcher.find()) {
+            XModel jModel = new XModel();
+            jModel.setUrl(matcher.group(1));
+            jModel.setQuality("Normal");
+            ArrayList<XModel> jModels = new ArrayList<>();
+            jModels.add(jModel);
+            return jModels;
+        }
+
         return null;
     }
 
-    private static void findMe() {
-        if (webView!=null) {
-            webView.loadUrl("javascript: (function() {" + decodeBase64(getJs()) + "})()");
-        }
-    }
-
-    private static String getJs(){
-        return "dmFyIHNyYyA9IGRvY3VtZW50LmdldEVsZW1lbnRzQnlUYWdOYW1lKCdzb3VyY2UnKTsKaWYoc3JjLmxlbmd0aD4wKXsKICAgIHNyYyA9IHNyYy5pdGVtKDApLnNyYzsKICAgIGRsKHNyYyk7Cn0gZWxzZSB7CiAgICB4R2V0dGVyLmVycm9yKHdpbmRvdy5sb2NhdGlvbi5ocmVmKTsKfQoKZnVuY3Rpb24gZGwodXJsKSB7CiAgICB2YXIgYW5jaG9yID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnYScpOwogICAgYW5jaG9yLnNldEF0dHJpYnV0ZSgnaHJlZicsIHVybCk7CiAgICBhbmNob3Iuc2V0QXR0cmlidXRlKCdkb3dubG9hZCcsIGRvY3VtZW50LnRpdGxlKTsKICAgIGFuY2hvci5zdHlsZS5kaXNwbGF5ID0gJ25vbmUnOwogICAgZG9jdW1lbnQuYm9keS5hcHBlbmRDaGlsZChhbmNob3IpOwogICAgYW5jaG9yLmNsaWNrKCk7CiAgICBkb2N1bWVudC5ib2R5LnJlbW92ZUNoaWxkKGFuY2hvcik7Cn0";
-    }
-
-    private static void destroyWebView() {
-        if (webView!=null) {
-            webView.loadUrl("about:blank");
-            webView.destroy();
-        }
-    }
-
-    private static class MyInterface {
-        @SuppressWarnings("unused")
-        @JavascriptInterface
-        public void error(final String error) {
-            new Handler(Looper.getMainLooper()).post(new Runnable() {
-                @Override
-                public void run() {
-                    destroyWebView();
-                    result(null);
-                }
-            });
-        }
-    }
-
-    private static void result(String result){
-        if (!gotMe) {
-            destroyWebView();
-            System.out.println("Fucked: " + result);
-            if (result != null && !result.isEmpty()) {
-                ArrayList<XModel> xModels = new ArrayList<>();
-                XModel model = new XModel();
-                model.setUrl(result);
-                model.setQuality("Normal");
-                xModels.add(model);
-                onTaskCompleted.onTaskCompleted(xModels, false);
-            } else onTaskCompleted.onError();
-        }
-    }
 }

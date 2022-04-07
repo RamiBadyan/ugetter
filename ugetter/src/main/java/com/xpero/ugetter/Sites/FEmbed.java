@@ -19,12 +19,6 @@ import java.util.regex.Pattern;
 
 import static com.xpero.ugetter.Utils.Utils.sortMe;
 
-/*
-This is direct link getter for Fembed
-    By
-Khun Htetz Naing
- */
-
 public class FEmbed {
     public static void fetch(String url, final LowCostVideo.OnTaskCompleted onComplete){
        // String id = get_fEmbed_video_ID(url);

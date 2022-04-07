@@ -1,4 +1,5 @@
 package com.xpero.ugetter.Sites;
+
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.StringRequestListener;
@@ -9,12 +10,6 @@ import java.util.ArrayList;
 import static com.xpero.ugetter.LowCostVideo.agent;
 import static com.xpero.ugetter.Utils.FacebookUtils.getFbLink;
 import static com.xpero.ugetter.Utils.Utils.putModel;
-
-/*
-This is direct link getter for Facebook
-    By
-Khun Htetz Naing
- */
 
 public class FB {
     public static void fetch(String url, final LowCostVideo.OnTaskCompleted onTaskCompleted){

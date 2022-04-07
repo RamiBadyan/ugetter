@@ -1,9 +1,408 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <RelativeLayout
+        android:id="@+id/head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="20dp"
+        android:gravity="center"
+        android:padding="5dp">
+
+        <Button
+            android:id="@+id/btn_fetch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:onClick="fetch"
+            android:text="@string/fetch"
+            tools:ignore="UsingOnClickInXml" />
+
+        <EditText
+            android:id="@+id/edit_query"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="3dp"
+            android:layout_toStartOf="@id/btn_fetch"
+            android:hint="@string/enter_your_url"
+            android:singleLine="true" />
+
+        <com.google.android.exoplayer2.ui.StyledPlayerView
+            android:id="@+id/player_view"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_below="@id/btn_fetch"
+            app:show_shuffle_button="true"
+            app:show_subtitle_button="true" />
+
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/head">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp"
+            tools:ignore="ScrollViewSize">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="3dp">
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="mp4upload"
+                        android:text="@string/mp4upload"
+                        tools:ignore="UsingOnClickInXml" />
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="zippyShare"
+                        android:text="Zippyshare"
+                        tools:ignore="UsingOnClickInXml" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="mediafire"
+                        android:text="@string/mediafire"
+                        tools:ignore="UsingOnClickInXml" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="vk"
+                        android:text="@string/vk"
+                        tools:ignore="UsingOnClickInXml" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="youtube"
+                        android:text="@string/youtube"
+                        tools:ignore="UsingOnClickInXml" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="vidozafiles"
+                        android:text="@string/vidoza"
+                        tools:ignore="UsingOnClickInXml" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="sendvid"
+                        android:text="@string/sendvid"
+                        tools:ignore="UsingOnClickInXml" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="filerio"
+                        android:text="@string/filerio"
+                        tools:ignore="UsingOnClickInXml" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="videobin"
+                        android:text="@string/videobin"
+                        tools:ignore="UsingOnClickInXml" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="fourshared"
+                        android:text="@string/_4shared"
+                        tools:ignore="UsingOnClickInXml" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="vudeo"
+                        android:text="@string/vudeo"
+                        tools:ignore="UsingOnClickInXml" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="doodstream"
+                        android:text="@string/doodstream"
+                        tools:ignore="UsingOnClickInXml" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="mixdrop"
+                        android:text="@string/mixdrop"
+                        tools:ignore="UsingOnClickInXml" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="gounlimited"
+                        android:text="@string/gounlimited"
+                        tools:ignore="UsingOnClickInXml" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="anavidz"
+                        android:text="@string/anavidz_btn"
+                        tools:ignore="UsingOnClickInXml" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="bitchute"
+                        android:text="@string/bitchute_btn"
+                        tools:ignore="UsingOnClickInXml" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="deadlyblogger"
+                        android:text="@string/deadlyblogger_btn"
+                        tools:ignore="UsingOnClickInXml" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="diasfem"
+                        android:text="@string/diasfem_btn"
+                        tools:ignore="UsingOnClickInXml" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="googleusercontent"
+                        android:text="@string/googleusercontent_btn"
+                        tools:ignore="UsingOnClickInXml" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="mediashore"
+                        android:text="@string/mediashore_btn"
+                        tools:ignore="UsingOnClickInXml" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="gomoplayer"
+                        android:text="gomoplayer"
+                        tools:ignore="UsingOnClickInXml" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="eplayvid"
+                        android:text="@string/eplayvidbtn"
+                        tools:ignore="UsingOnClickInXml" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="midian"
+                        android:text="@string/midian_appboxes_avi_not_supported"
+                        tools:ignore="UsingOnClickInXml" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="yodbox"
+                        android:text="@string/yobox_btn"
+                        tools:ignore="UsingOnClickInXml" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="3dp">
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="gphotos"
+                        android:text="@string/google_photos"
+                        tools:ignore="UsingOnClickInXml" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="fb"
+                        android:text="@string/facebook"
+                        tools:ignore="UsingOnClickInXml" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="okru"
+                        android:text="@string/ok_ru"
+                        tools:ignore="UsingOnClickInXml" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="twitter"
+                        android:text="@string/twitter"
+                        tools:ignore="UsingOnClickInXml" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="solidfiles"
+                        android:text="@string/solidfiles"
+                        tools:ignore="UsingOnClickInXml" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="fEmbed"
+                        android:text="@string/fembed"
+                        tools:ignore="UsingOnClickInXml" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="dailymotion"
+                        android:text="@string/dailymotion"
+                        tools:ignore="UsingOnClickInXml" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="vidbm"
+                        android:text="@string/vidbm"
+                        tools:ignore="UsingOnClickInXml" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="bittube"
+                        android:text="@string/bittube"
+                        tools:ignore="UsingOnClickInXml" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="streamtape"
+                        android:text="@string/streamtape"
+                        tools:ignore="UsingOnClickInXml" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="amazon"
+                        android:text="@string/amazon_drive"
+                        tools:ignore="UsingOnClickInXml" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="streamsb"
+                        android:text="@string/streamsbz"
+                        tools:ignore="UsingOnClickInXml" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="voxzer"
+                        android:text="@string/voxzer_string"
+                        tools:ignore="UsingOnClickInXml" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="aparat"
+                        android:text="@string/aparat_btn"
+                        tools:ignore="UsingOnClickInXml" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="archive"
+                        android:text="@string/archive_btn"
+                        tools:ignore="UsingOnClickInXml" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="brighteon"
+                        android:text="@string/brighteon_btn"
+                        tools:ignore="UsingOnClickInXml" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="fansubs"
+                        android:text="@string/fansubs_btn"
+                        tools:ignore="UsingOnClickInXml" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="gdstream"
+                        android:text="@string/gdstream_btn"
+                        tools:ignore="UsingOnClickInXml" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="hdvid"
+                        android:text="@string/hdvid_vidhdthe_btn"
+                        tools:ignore="UsingOnClickInXml" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="voesx"
+                        android:text="@string/voesx_btn"
+                        tools:ignore="UsingOnClickInXml" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="vidmoly"
+                        android:text="@string/vidmolybtn"
+                        tools:ignore="UsingOnClickInXml" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="upstream"
+                        android:text="UpStream"
+                        tools:ignore="UsingOnClickInXml" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

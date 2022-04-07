@@ -2,6 +2,7 @@ package com.xpero.ugetter.Sites;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.androidnetworking.interfaces.StringRequestListener;
 import com.xpero.ugetter.Utils.DailyMotionUtils;
 import com.xpero.ugetter.LowCostVideo;
@@ -16,58 +17,52 @@ import okhttp3.CookieJar;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 
+import static com.xpero.ugetter.Utils.Utils.putModel;
 import static com.xpero.ugetter.Utils.Utils.sortMe;
 
-/*
-This is direct link getter for DailyMotion
-    By
-Khun Htetz Naing
- */
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class DailyMotion {
-    private static String COOKIE = null;
-    public static void fetch(String url, final LowCostVideo.OnTaskCompleted onComplete){
-        CookieJar cookieJar = new CookieJar() {
-            private final HashMap<String, List<Cookie>> cookieStore = new HashMap<>();
 
-            @Override
-            public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
-                COOKIE = cookies.toString();
-                cookieStore.put(url.host(), cookies);
-            }
+    public static void fetch(String url, final LowCostVideo.OnTaskCompleted onTaskCompleted){
 
-            @Override
-            public List<Cookie> loadForRequest(HttpUrl url) {
-                List<Cookie> cookies = cookieStore.get(url.host());
-                return cookies != null ? cookies : new ArrayList<Cookie>();
-            }
-        };
+        String meta_url = "https://www.dailymotion.com/player/metadata/video/"+getMediaID(url);
 
-        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .cookieJar(cookieJar)
-                .build();
-
-        AndroidNetworking.get("https://www.dailymotion.com/embed/video/"+ DailyMotionUtils.getDailyMotionID(url))
-                .setOkHttpClient(okHttpClient)
-                .setUserAgent(LowCostVideo.agent)
+        AndroidNetworking.get(meta_url)
                 .build()
-                .getAsString(new StringRequestListener() {
+                .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
-                    public void onResponse(String response) {
-                        new DailyMotionUtils().fetch(response, new DailyMotionUtils.OnDone() {
-                            @Override
-                            public void onResult(ArrayList<XModel> xModels) {
-                                if (xModels!=null){
-                                    onComplete.onTaskCompleted(sortMe(xModels),true);
-                                }else onComplete.onError();
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONObject obj = response.getJSONObject("qualities");
+                            JSONArray contacts = obj.getJSONArray("auto");
+                            ArrayList<XModel> models = new ArrayList<>();
+                            for (int i = 0; i < contacts.length(); i++) {
+                                String url = contacts.getJSONObject(i).getString("url");
+                                putModel(url, "Default", models);
                             }
-                        });
+
+                            if(models.size() > 1){
+                                onTaskCompleted.onTaskCompleted(sortMe(models), true);
+                            } else {
+                                onTaskCompleted.onTaskCompleted(models, false);
+                            }
+
+                        } catch (Exception Error){
+                            Error.printStackTrace();
+                            onTaskCompleted.onError();
+                        }
                     }
 
                     @Override
                     public void onError(ANError anError) {
-                        onComplete.onError();
+                        onTaskCompleted.onError();
                     }
                 });
     }
-}
+
+    private static String getMediaID(String url){
+        url = url.substring(url.lastIndexOf("/") + 1);
+        return url;
+    }}

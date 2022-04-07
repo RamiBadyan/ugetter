@@ -25,15 +25,7 @@ import okhttp3.CookieJar;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 
-import static com.xpero.ugetter.LowCostVideo.agent;
-import static com.xpero.ugetter.Utils.Utils.putModel;
 import static com.xpero.ugetter.Utils.Utils.sortMe;
-
-/*
-This is direct link getter for UpToStream,UpToBox
-    By
-Khun Htetz Naing
- */
 
 public class UpToStream {
     private static String COOKIE = null;

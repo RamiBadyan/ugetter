@@ -14,12 +14,6 @@ import static com.xpero.ugetter.LowCostVideo.agent;
 import static com.xpero.ugetter.Utils.FacebookUtils.getFbLink;
 import static com.xpero.ugetter.Utils.Utils.putModel;
 
-/*
-This is direct link getter for Mediafire
-    By
-Khun Htetz Naing
- */
-
 public class MFire {
     public static void fetch(String url, final LowCostVideo.OnTaskCompleted onTaskCompleted){
         AndroidNetworking.get(fixURL(url))

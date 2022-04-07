@@ -5,10 +5,28 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 
 import com.androidnetworking.AndroidNetworking;
+import com.xpero.ugetter.Sites.Amazon;
+import com.xpero.ugetter.Sites.Anavidz;
+import com.xpero.ugetter.Sites.Aparat;
+import com.xpero.ugetter.Sites.Archive;
+import com.xpero.ugetter.Sites.BitChute;
 import com.xpero.ugetter.Sites.BitTube;
+import com.xpero.ugetter.Sites.Brighteon;
+import com.xpero.ugetter.Sites.DeadlyBlogger;
+import com.xpero.ugetter.Sites.Diasfem;
+import com.xpero.ugetter.Sites.EplayVid;
+import com.xpero.ugetter.Sites.FShared;
+import com.xpero.ugetter.Sites.GDStream;
+import com.xpero.ugetter.Sites.GUContent;
+import com.xpero.ugetter.Sites.GoMo;
+import com.xpero.ugetter.Sites.HDVid;
+import com.xpero.ugetter.Sites.MediaShore;
 import com.xpero.ugetter.Sites.MegaUp;
+import com.xpero.ugetter.Sites.Midian;
 import com.xpero.ugetter.Sites.StreamKIWI;
 import com.xpero.ugetter.Sites.StreamTape;
+import com.xpero.ugetter.Sites.Upstream;
+import com.xpero.ugetter.Sites.VidMoly;
 import com.xpero.ugetter.Sites.VideoBIN;
 import com.xpero.ugetter.Sites.VivoSX;
 import com.xpero.ugetter.Sites.Vlare;
@@ -18,7 +36,9 @@ import com.xpero.ugetter.Sites.DailyMotion;
 import com.xpero.ugetter.Sites.GoUnlimited;
 import com.xpero.ugetter.Sites.Muvix;
 import com.xpero.ugetter.Sites.VideoBM;
+import com.xpero.ugetter.Sites.Voxzer;
 import com.xpero.ugetter.Sites.Vudeo;
+import com.xpero.ugetter.Sites.YodBox;
 import com.xpero.ugetter.Sites.Zippy;
 import com.xpero.ugetter.Utils.DailyMotionUtils;
 import com.xpero.ugetter.Core.GDrive2020;
@@ -39,11 +59,14 @@ import com.xpero.ugetter.Sites.VK;
 import com.xpero.ugetter.Sites.Vidoza;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.xpero.ugetter.Utils.FacebookUtils.check_fb_video;
 import static com.xpero.ugetter.Utils.GDriveUtils.get_drive_id;
+
+import okhttp3.OkHttpClient;
 
 public class LowCostVideo {
     private Context context;
@@ -66,22 +89,53 @@ public class LowCostVideo {
     private final String megaup = "https?:\\/\\/(www\\.)?(megaup)\\.[^\\/,^\\.]{2,}\\/.+";
     private final String gounlimited = "https?:\\/\\/(www\\.)?(gounlimited)\\.[^\\/,^\\.]{2,}\\/.+";
     private final String cocoscope = "https?:\\/\\/(www\\.)?(cocoscope)\\.[^\\/,^\\.]{2,}\\/(watch\\?v).+";
-    private final String vidbm = "https?:\\/\\/(www\\.)?(vidbm)\\.[^\\/,^\\.]{2,}\\/.+";
+    //private final String vidbm = "https?:\\/\\/(www\\.)?(vidbm)\\.[^\\/,^\\.]{2,}\\/.+";
     private final String muvix = "https?:\\/\\/(www\\.)?(muvix)\\.[^\\/,^\\.]{2,}\\/(video|download).+";
     private final String pstream = "https?:\\/\\/(www\\.)?(pstream)\\.[^\\/,^\\.]{2,}\\/(.*)\\/.+";
     private final String vlareTV = "https?:\\/\\/(www\\.)?(vlare\\.tv)\\/(.*)\\/.+";
     private final String vivoSX = "https?:\\/\\/(www\\.)?(vivo\\.sx)\\/.+";
     private final String streamKiwi = "https?:\\/\\/(www\\.)?(stream\\.kiwi)\\/(.*)\\/.+";
     private final String bitTube = "https?:\\/\\/(www\\.)?(bittube\\.video\\/videos)\\/(watch|embed)\\/.+";
-    private final String videoBIN = "https?:\\/\\/(www\\.)?(videobin\\.co)\\/.+";
+    //private final String videoBIN = "https?:\\/\\/(www\\.)?(videobin\\.co)\\/.+";
     private final String fourShared = "https?:\\/\\/(www\\.)?(4shared\\.com)\\/(video|web\\/embed)\\/.+";
-    private final String streamtape = "https?:\\/\\/(www\\.)?(streamtape\\.com)\\/(v)\\/.+";
+    private final String streamtape = "https?:\\/\\/(www\\.)?(streamtape\\.com)\\/(v|e)\\/.+";
     private final String vudeo = "https?:\\/\\/(www\\.)?(vudeo\\.net)\\/.+";
     private final String zippy = "https?:\\/\\/(www.*\\.)(zippyshare\\.com)\\/.+";
+    private final String vidbm = "https?:\\/\\/(vidbam)\\.[^\\/,^\\.]{2,}\\/.+";
+    private final String videoBIN = "https?:\\/\\/(videobin\\.co)\\/.+";
+    private final String amazon = "https?:\\/\\/(www\\.)?(amazon\\.com)\\/?(clouddrive)\\/+";
+    private final String doodstream = "(?://|\\.)(dood(?:stream)?\\.(?:com|watch|to|so|la|ws|sh))/(?:d|e)/([0-9a-zA-Z]+)";
+    private final String streamsb = ".+(streamsb|sbplay|sbplay2|sbembed|sbembed1|sbvideo|cloudemb|playersb|tubesb|sbplay1|embedsb|watchsb)\\.(com|net|one|org)/.+";
+    private final String mixdrop = ".+(mixdrop)\\.(co|to|sx|bz)\\/.+";
+    private final String voxzer = "https?:\\/\\/(player\\.)?(voxzer\\.)(?:org).+";
+    private final String anavidz = ".+(anavidz\\.com).+";
+    private final String aparat = ".+(aparat\\.com/v/).+";
+    private final String archive = ".+(archive)\\.(org)\\/.+";
+    private final String bitchute = ".+(bitchute\\.com)/(?:video|embed).+";
+    private final String brighteon = ".+(brighteon\\.com).+";
+    private final String deadlyblogger = ".+(deadlyblogger\\.com).+";
+    private final String diasfem = ".+(diasfem\\.com|suzihaza)/v|f/.+";
+    private final String gdstream = ".+(gdstream\\.net)/v|f/.+";
+    private final String googleusercontent = ".+(googleusercontent\\.com).+";
+    private final String hdvid = ".+(hdvid|vidhdthe)\\.(tv|fun|online)/.+";
+    private final String mediashore = ".+(mediashore\\.org)/v|f/.+";
+    private final String voesx = ".+(voe\\.sx).+";
+    private final String gomoplayer = ".+(gomoplayer\\.com).+";
+    private final String eplayvid = ".+(eplayvid)\\.(com|net)/.+";
+    private final String vidmoly = ".+(vidmoly)\\.(me)/.+";
+    private final String midian =  ".+(midian\\.appboxes)\\.(co)/.+";
+    private final String upstream = ".+(upstream)\\.(to)/.+";
+    private final String yodbox = ".+(yodbox)\\.(com)/.+";
 
     public LowCostVideo(@NonNull Context context){
         this.context=context;
-        AndroidNetworking.initialize(context);
+        OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
+                .connectTimeout(20000, TimeUnit.MILLISECONDS)
+                .readTimeout(20000, TimeUnit.MILLISECONDS)
+                .writeTimeout(20000, TimeUnit.MILLISECONDS)
+                .build();
+
+        AndroidNetworking.initialize(context,okHttpClient);
     }
 
     public void find(String url){
@@ -128,7 +182,7 @@ public class LowCostVideo {
         } else if (check(cocoscope,url)){
             CoCoScope.fetch(url,onComplete);
         } else if (check(vidbm,url)){
-            VideoBM.get(context,url,onComplete);
+            VideoBM.fetch(url,onComplete);
         } else if (check(muvix,url)){
             Muvix.fetch(url,onComplete);
         } else if (check(pstream,url)){
@@ -144,13 +198,69 @@ public class LowCostVideo {
         }else if (check(videoBIN,url)){
             VideoBIN.fetch(url,onComplete);
         }else if (check(fourShared,url)){
-            StreamKIWI.get(context,url,onComplete);
+            FShared.fetch(url,onComplete);
         }else if (check(streamtape,url)){
             StreamTape.fetch(url,onComplete);
         }else if (check(vudeo,url)) {
             Vudeo.fetch(url, onComplete);
         }else if (check(zippy,url)) {
             Zippy.fetch(context,url, onComplete);
+        }else if (check(vidmoly,url)){
+            VidMoly.fetch(url,onComplete);
+        }else if (check(yodbox,url)){
+            YodBox.fetch(url,onComplete);
+        }else if (check(midian,url)){
+            Midian.fetch(url,onComplete);
+        } else if (check(eplayvid,url)){
+            EplayVid.fetch(url,onComplete);
+        }else if (check(gomoplayer, url)) {
+            if(!url.contains("embed")) {
+                String[] splits = url.split("/");
+                String ID = splits[splits.length-1];
+                String newurl = "https://gomoplayer.com/embed-"+ID+".html";
+                GoMo.fetch(newurl, onComplete);
+            } else {
+                GoMo.fetch(url, onComplete);
+            }
+        } else if (check(mediashore,url)){
+            MediaShore.fetch(url,onComplete);
+        } else if (check(hdvid, url)) {
+            if(url.contains("embed")){
+                HDVid.fetch(url,onComplete);
+            } else {
+                String[] splits = url.split("/");
+                String ID = splits[splits.length-1];
+                String new_url = "https://hdvid.fun/embed-"+ID;
+                HDVid.fetch(new_url,onComplete);
+            }
+        }else if (check(googleusercontent, url)) {
+            GUContent.fetch(url,onComplete);
+        }else if (check(sendvid, url)) {
+            SendVid.fetch(url,onComplete);
+        }else if (check(gdstream, url)) {
+            GDStream.fetch(url,onComplete);
+        }else if (check(diasfem, url)) {
+            Diasfem.fetch(url,onComplete);
+        }else if (check(fansubs, url)) {
+            FanSubs.fetch(url,onComplete);
+        }else if (check(deadlyblogger, url)) {
+            DeadlyBlogger.fetch(url,onComplete);
+        }else if (check(brighteon, url)) {
+            Brighteon.fetch(url,onComplete);
+        }else if (check(bitchute, url)) {
+            BitChute.fetch(url,onComplete);
+        }else if (check(archive, url)) {
+            Archive.fetch(url,onComplete);
+        }else if (check(aparat, url)) {
+            Aparat.fetch(url,onComplete);
+        }else if (check(anavidz, url)) {
+            Anavidz.fetch(url,onComplete);
+        }else if (check(voxzer, url)) {
+            Voxzer.fetch(url,onComplete);
+        }else if (check(amazon, url)) {
+            Amazon.fetch(url,onComplete);
+        } else if (check(upstream,url)){
+            Upstream.fetch(url,onComplete);
         }else onComplete.onError();
     }
 
