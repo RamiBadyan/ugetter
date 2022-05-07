@@ -14,6 +14,8 @@ import static com.xpero.ugetter.LowCostVideo.agent;
 import static com.xpero.ugetter.Utils.FacebookUtils.getFbLink;
 import static com.xpero.ugetter.Utils.Utils.putModel;
 
+import android.util.Log;
+
 public class MFire {
     public static void fetch(String url, final LowCostVideo.OnTaskCompleted onTaskCompleted){
         AndroidNetworking.get(fixURL(url))
@@ -22,7 +24,8 @@ public class MFire {
                 .getAsString(new StringRequestListener() {
                     @Override
                     public void onResponse(String response) {
-                        final String regex = "aria-label=\"Download file\"\\n.+href=\"(.*)\"";
+//                        final String regex = "aria-label=\"Download file\"\\n.+href=\"(.*)\"";
+                        final String regex = "aria-label=\"Download file\" +href=\"(.*.(?:mp4|mkv|avi|webm|mov|wmv|flv))\"";
                         final Pattern pattern = Pattern.compile(regex);
                         final Matcher matcher = pattern.matcher(response);
                         if (matcher.find()) {

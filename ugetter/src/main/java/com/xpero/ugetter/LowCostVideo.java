@@ -23,7 +23,6 @@ import com.xpero.ugetter.Sites.HDVid;
 import com.xpero.ugetter.Sites.MediaShore;
 import com.xpero.ugetter.Sites.MegaUp;
 import com.xpero.ugetter.Sites.Midian;
-import com.xpero.ugetter.Sites.StreamKIWI;
 import com.xpero.ugetter.Sites.StreamTape;
 import com.xpero.ugetter.Sites.Upstream;
 import com.xpero.ugetter.Sites.VidMoly;
