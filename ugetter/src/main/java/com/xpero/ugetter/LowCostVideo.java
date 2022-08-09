@@ -137,7 +137,7 @@ public class LowCostVideo {
         AndroidNetworking.initialize(context,okHttpClient);
     }
 
-    public void find(String url){
+    public void find(String url,String regex){
         if (check(mp4upload, url)) {
             //https://www.mp4upload.com/
             MP4Upload.fetch(url,onComplete);
@@ -153,7 +153,7 @@ public class LowCostVideo {
         } else if (check_fb_video(url)) {
             FB.fetch(url,onComplete);
         } else if (check(mediafire, url)) {
-            MFire.fetch(url,onComplete);
+            MFire.fetch(url,onComplete,regex);
         } else if (check(okru,url)){
             OKRU.fetch(url,onComplete);
         } else if (check(vk,url)){

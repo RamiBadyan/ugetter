@@ -363,7 +363,7 @@ public class MainActivity extends AppCompatActivity {
         org = url;
         progressDialog.show();
         player_referer = referer;
-        xGetter.find(url);
+        xGetter.find(url,"null");
     }
 
     private void done(XModel xModel) {

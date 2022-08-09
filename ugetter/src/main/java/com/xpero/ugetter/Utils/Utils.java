@@ -81,4 +81,14 @@ public class Utils {
         }
         return null;
     }
+
+    public static String getID(String data){
+        if(data.contains(".html")){
+            data = data.replace(".html" ,"");
+            return data.substring(data.lastIndexOf("/") + 1);
+        } else {
+            return data.substring(data.lastIndexOf("/") + 1);
+        }
+    }
+
 }

@@ -17,22 +17,30 @@ import static com.xpero.ugetter.Utils.Utils.putModel;
 import android.util.Log;
 
 public class MFire {
-    public static void fetch(String url, final LowCostVideo.OnTaskCompleted onTaskCompleted){
+    public static void fetch(String url, final LowCostVideo.OnTaskCompleted onTaskCompleted,String newRegex) {
         AndroidNetworking.get(fixURL(url))
                 .addHeaders("User-agent", agent)
                 .build()
                 .getAsString(new StringRequestListener() {
                     @Override
                     public void onResponse(String response) {
-//                        final String regex = "aria-label=\"Download file\"\\n.+href=\"(.*)\"";
-                        final String regex = "aria-label=\"Download file\" +href=\"(.*.(?:mp4|mkv|avi|webm|mov|wmv|flv))\"";
+                        // final String regex = "aria-label=\"Download file\"\\n.+href=\"(.*)\"";
+                        // final String regex = "aria-label=\"Download file\" +href=\"(.*.(?:mp4|mkv|avi|webm|mov|wmv|flv))\"";
+                        String removeSpaces = response.replace(" ", "");
+                        String removeLines = removeSpaces.replace("\n", "");
+                        String regex = "";
+                        if (newRegex == null || newRegex.equals("null")) {
+                           regex = "(?<=aria-label=\"Downloadfile\"href=\")(.*)(?=\"id=\"downloadButton\")";
+                        } else {
+                            regex = newRegex;
+                        }
                         final Pattern pattern = Pattern.compile(regex);
-                        final Matcher matcher = pattern.matcher(response);
+                        final Matcher matcher = pattern.matcher(removeLines);
                         if (matcher.find()) {
                             ArrayList<XModel> xModels = new ArrayList<>();
-                            putModel(matcher.group(1),"Normal",xModels);
-                            onTaskCompleted.onTaskCompleted(xModels,false);
-                        }else onTaskCompleted.onError();
+                            putModel(matcher.group(1), "Normal", xModels);
+                            onTaskCompleted.onTaskCompleted(xModels, false);
+                        } else onTaskCompleted.onError();
                     }
 
                     @Override
@@ -42,9 +50,9 @@ public class MFire {
                 });
     }
 
-    private static String fixURL(String url){
-        if (!url.startsWith("https")){
-            url = url.replace("http","https");
+    private static String fixURL(String url) {
+        if (!url.startsWith("https")) {
+            url = url.replace("http", "https");
         }
         return url;
     }
