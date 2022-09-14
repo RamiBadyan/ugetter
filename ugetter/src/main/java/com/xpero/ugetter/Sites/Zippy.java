@@ -8,6 +8,9 @@ import android.os.Looper;
 import android.util.Base64;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -20,14 +23,18 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import android.os.Handler;
 
+import androidx.annotation.RequiresApi;
+
 public class Zippy {
 
     private static WebView webView;
     private static LowCostVideo.OnTaskCompleted onTaskCompleted;
+    private static Boolean timeout;
 
     @SuppressLint({"SetJavaScriptEnabled", "AddJavascriptInterface"})
     public static void fetch(Context context, String url, final LowCostVideo.OnTaskCompleted onDone ) {
         onTaskCompleted = onDone;
+        timeout = true;
 
         try {
             url = URLDecoder.decode(url, "utf-8");
@@ -43,6 +50,38 @@ public class Zippy {
                 super.onPageFinished(view, url);
                 Log.d("LowCostVideo.TAG", "FIND");
                 findMe();
+            }
+
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                super.onReceivedError(view, request, error);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    Log.d("LowCostVideo.TAG", "onReceivedError: "+error.getErrorCode()+" "+error.getDescription());
+                    if (error.getErrorCode() == -6){
+                        timeout = false;
+                        onTaskCompleted.onError();
+                    }
+                }
+            }
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+
+                try {
+                    Runnable run = () -> {
+                        if(timeout) {
+                            Log.d("LowCostVideo.TAG", "timeout");
+                            onTaskCompleted.onError();
+                        }else {
+                            Log.d("LowCostVideo.TAG", "timeout is not complete");
+                        }
+                    };
+                    Handler myHandler = new Handler(Looper.myLooper());
+                    myHandler.postDelayed(run, 24000);
+                }catch (Exception error) {
+                    error.printStackTrace();
+                }
             }
         });
 
@@ -76,6 +115,7 @@ public class Zippy {
 
     private static void findMe() {
         if (webView!=null) {
+            Log.d("LowCostVideo.TAG", "webView!=null");
             String url = "javascript: (function() {" + decodeBase64(getJs()) + "})()";
             webView.evaluateJavascript(url, null);
         }
@@ -91,6 +131,7 @@ public class Zippy {
     {
         destroyWebView();
         System.out.println("Fucked: " + result);
+        timeout = false;
         if (result != null && !result.isEmpty() && !result.contains("/file.html")) {
             ArrayList<XModel> xModels = new ArrayList<>();
             XModel model = new XModel();

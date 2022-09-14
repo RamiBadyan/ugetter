@@ -174,6 +174,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void zippyShare(View view) {
+//        letGo("https://www51.zippyshare.com/v/khFt3poy/file.html", "https://www51.zippyshare.com/v/khFt3poy/file.html");
         letGo("https://www13.zippyshare.com/v/N5WQ9Qum/file.html", "https://www13.zippyshare.com/v/N5WQ9Qum/file.html");
     }
     public void wu(View view) {
